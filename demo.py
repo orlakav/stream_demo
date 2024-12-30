@@ -109,5 +109,43 @@ fig.update_layout(
 )
 
 # Display the chart in Streamlit
-st.title("Interactive Cost Fluctuations in Irish Wheat Farming")
+st.title("Cost Fluctuations in Irish Wheat Farming")
+st.plotly_chart(fig)
+
+
+# Load the dataset
+data_file = "fra_uk_irl.csv"  
+fra_uk_irl = pd.read_csv(data_file)
+
+# List of features to choose from
+features = [
+    "(SE110) Yield of wheat (q/ha)",
+    "(SE295) Fertilisers (€/farm)",
+    "(SE345) Energy (€/farm)",
+]
+
+# Dropdown for feature selection
+selected_feature = st.selectbox("Select a feature to visualize:", features)
+
+# Create the line chart
+fig = px.line(
+    fra_uk_irl,
+    x="Year",
+    y=selected_feature,
+    color="Member State",  # "Member State" will be used to differentiate countries
+    title=f"{selected_feature} over Time",
+    labels={"Year": "Year", selected_feature: selected_feature},
+    template="plotly_white",
+)
+
+# Update layout for interactivity and legend customization
+fig.update_layout(
+    legend_title="Member State",
+    xaxis=dict(title="Year"),
+    yaxis=dict(title=selected_feature),
+    hovermode="x unified",  # Show values for all countries at the same year when hovering
+)
+
+# Display the chart in Streamlit
+st.title(f"Interactive Plot for {selected_feature}")
 st.plotly_chart(fig)
