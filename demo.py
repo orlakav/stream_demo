@@ -52,3 +52,33 @@ fig.update_layout(
 # Display the choropleth in Streamlit
 st.title("Worldwide Wheat Data Visualization")
 st.plotly_chart(fig)
+
+# Load the dataset
+data_file = "area_farmed.csv"  # Ensure this file is in the same folder as this script
+area_farmed = pd.read_csv(data_file)
+
+# Ensure 'Year' is treated as a numeric variable
+area_farmed['Year'] = pd.to_numeric(area_farmed['Year'], errors='coerce')
+
+# Create the line chart
+fig = px.line(
+    area_farmed,
+    x="Year",
+    y="Total wheat",
+    color="Region",
+    title="Estimated Area of Wheat Farmed Over Time by Region",
+    labels={"Year": "Year", "Total wheat": "Area of Wheat Farmed"},
+    template="plotly_white",
+)
+
+# Update layout for interactivity
+fig.update_layout(
+    legend_title="Region",
+    xaxis=dict(title="Year"),
+    yaxis=dict(title="Area of Wheat Farmed"),
+    hovermode="x unified",
+)
+
+# Display the chart in Streamlit
+st.title("Interactive Area of Wheat Farmed by Region")
+st.plotly_chart(fig)
