@@ -79,6 +79,49 @@ fig.update_layout(
 st.title("Area of Wheat Farmed by Region")
 st.plotly_chart(fig)
 
+# Filter the dataset to include only the "State" region
+state_data = area_farmed[area_farmed['Region'] == 'State']
+
+# List of wheat types to choose from
+crop_types = ['Spring wheat', 'Total cereals', 'Total wheat', 'Winter wheat']
+
+# Allow users to toggle wheat types (multiselect)
+selected_wheat_types = st.multiselect(
+    "Select crop types to display:",
+    options=crop_types,
+    default=crop_types  # Default selects all crop types
+)
+
+# Filter the dataset to include only the selected wheat types
+filtered_data = state_data[['Year'] + selected_wheat_types]
+
+# Reshape the dataset so that each selected wheat type is a separate line
+# Melt the dataframe to long format for Plotly
+melted_data = pd.melt(filtered_data, id_vars=["Year"], value_vars=selected_wheat_types, 
+                      var_name="Wheat Type", value_name="Area Farmed")
+
+# Create the line chart
+fig = px.line(
+    melted_data,
+    x="Year",
+    y="Area Farmed",
+    color="Wheat Type",  # Differentiate wheat types by color
+    title="Area Farmed for Different Wheat Types Over Time",
+    labels={"Year": "Year", "Area Farmed": "Area Farmed (ha)", "Wheat Type": "Wheat Type"},
+    template="plotly_white"
+)
+
+# Update layout for interactivity
+fig.update_layout(
+    legend_title="Wheat Type",
+    xaxis=dict(title="Year"),
+    yaxis=dict(title="Area Farmed (ha)"),
+    hovermode="x unified",  # Show values for all wheat types at the same year when hovering
+)
+
+# Display the chart in Streamlit
+st.title("Interactive Line Chart for Wheat Types")
+st.plotly_chart(fig)
 
 # Load the dataset
 data_file = "worldwide_wheat.csv" 
