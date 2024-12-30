@@ -18,11 +18,12 @@ fig = px.line(data, x=data.index, y=selected_feature,
 fig.update_traces(mode='lines+markers', hovertemplate='%{x}: %{y:.2f}')
 
 # Display the plot
+st.title("Irish wheat data with predictions")
 st.plotly_chart(fig)
 
 
 # Load the dataset
-data_file = "worldwide_wheat.csv"  # Ensure this file is in the same folder as this script
+data_file = "worldwide_wheat.csv" 
 wheat_data = pd.read_csv(data_file)
 
 # Ensure 'Year' is treated as a categorical variable for animation
@@ -54,7 +55,7 @@ st.title("Worldwide Wheat Data Visualization")
 st.plotly_chart(fig)
 
 # Load the dataset
-data_file = "area_farmed.csv"  # Ensure this file is in the same folder as this script
+data_file = "area_farmed.csv"  
 area_farmed = pd.read_csv(data_file)
 
 # Ensure 'Year' is treated as a numeric variable
@@ -80,5 +81,33 @@ fig.update_layout(
 )
 
 # Display the chart in Streamlit
-st.title("Interactive Area of Wheat Farmed by Region")
+st.title("Area of Wheat Farmed by Region")
+st.plotly_chart(fig)
+
+# Load the dataset
+data_file = "cost_base.csv"  
+melted_cost = pd.read_csv(data_file)
+
+# Create the line chart
+fig = px.line(
+    melted_cost,
+    x="Year",
+    y="Cost",
+    color="Cost Type",
+    title="Costs Fluctuations in Irish Wheat Farming (Base 2015)",
+    labels={"Year": "Year", "Cost": "Cost (Base 2015)"},
+    template="plotly_white",
+)
+
+# Update layout to adjust legend placement and interactivity
+fig.update_layout(
+    legend_title="Cost Type",
+    legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.05),  # Move legend outside
+    xaxis=dict(title="Year"),
+    yaxis=dict(title="Cost"),
+    hovermode="x unified",
+)
+
+# Display the chart in Streamlit
+st.title("Interactive Cost Fluctuations in Irish Wheat Farming")
 st.plotly_chart(fig)
