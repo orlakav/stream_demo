@@ -85,11 +85,6 @@ state_data = area_farmed[area_farmed['Region'] == 'State']
 # List of wheat types to choose from
 crop_types = ['Spring wheat', 'Total cereals', 'Total wheat', 'Winter wheat']
 
-# Allow users to toggle wheat types (multiselect)
-selected_wheat_types = st.multiselect(
-    "Select crop types to display:",
-    options=crop_types,
-    default=crop_types  # Default selects all crop types
 )
 
 # Filter the dataset to include only the selected wheat types
