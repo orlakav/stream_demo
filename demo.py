@@ -100,7 +100,7 @@ fig = px.line(
     x="Year",
     y="Area Farmed",
     color="Wheat Type",  # Differentiate wheat types by color
-    title="Area of Wheat Farmed Over Time for 'State' Region",
+    title="Area of Wheat Farmed Over Time in Ireland",
     labels={"Year": "Year", "Area Farmed": "Area Farmed (ha)", "Wheat Type": "Wheat Type"},
     template="plotly_white",
 )
