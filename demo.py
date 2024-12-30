@@ -82,17 +82,17 @@ st.plotly_chart(fig)
 # Filter the dataset to include only the "State" region
 state_data = area_farmed[area_farmed['Region'] == 'State']
 
-# List of wheat types to choose from
+# List of wheat types to plot
 crop_types = ['Spring wheat', 'Total cereals', 'Total wheat', 'Winter wheat']
 
-
-# Filter the dataset to include only the selected wheat types
-filtered_data = state_data[['Year'] + selected_wheat_types]
-
-# Reshape the dataset so that each selected wheat type is a separate line
-# Melt the dataframe to long format for Plotly
-melted_data = pd.melt(filtered_data, id_vars=["Year"], value_vars=selected_wheat_types, 
-                      var_name="Wheat Type", value_name="Area Farmed")
+# Reshape the dataset so that each wheat type is a separate line
+melted_data = pd.melt(
+    state_data,
+    id_vars=["Year"],
+    value_vars=crop_types,
+    var_name="Wheat Type",
+    value_name="Area Farmed"
+)
 
 # Create the line chart
 fig = px.line(
@@ -100,9 +100,9 @@ fig = px.line(
     x="Year",
     y="Area Farmed",
     color="Wheat Type",  # Differentiate wheat types by color
-    title="Area Farmed for Different Wheat Types Over Time",
+    title="Area of Wheat Farmed Over Time for 'State' Region",
     labels={"Year": "Year", "Area Farmed": "Area Farmed (ha)", "Wheat Type": "Wheat Type"},
-    template="plotly_white"
+    template="plotly_white",
 )
 
 # Update layout for interactivity
@@ -114,8 +114,9 @@ fig.update_layout(
 )
 
 # Display the chart in Streamlit
-st.title("Interactive Line Chart for Wheat Types")
+st.title("Interactive Line Chart for Wheat Types in 'State' Region")
 st.plotly_chart(fig)
+
 
 # Load the dataset
 data_file = "worldwide_wheat.csv" 
