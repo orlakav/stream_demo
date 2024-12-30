@@ -114,7 +114,7 @@ fig.update_layout(
 )
 
 # Display the chart in Streamlit
-st.title("Interactive Line Chart for Wheat Types in 'State' Region")
+st.title("Area farmed of different Wheat Types in Ireland")
 st.plotly_chart(fig)
 
 
