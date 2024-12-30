@@ -85,7 +85,6 @@ state_data = area_farmed[area_farmed['Region'] == 'State']
 # List of wheat types to choose from
 crop_types = ['Spring wheat', 'Total cereals', 'Total wheat', 'Winter wheat']
 
-)
 
 # Filter the dataset to include only the selected wheat types
 filtered_data = state_data[['Year'] + selected_wheat_types]
