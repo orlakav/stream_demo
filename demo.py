@@ -232,5 +232,5 @@ fig.update_layout(
 )
 
 # Display the chart in Streamlit
-st.title(f"Interactive Plot for {selected_feature}")
+st.title(f"{selected_feature} over time")
 st.plotly_chart(fig)
