@@ -64,7 +64,7 @@ selected_feature = st.selectbox("Select a feature to visualize:", features)
 
 # Filter dataset to include only Ireland by default
 default_countries = ['Ireland']
-country_options = worldwide_wheat['Area'].unique().tolist()
+country_options = wheat_data['Area'].unique().tolist()
 
 # Allow users to toggle countries
 selected_countries = st.multiselect(
@@ -74,7 +74,7 @@ selected_countries = st.multiselect(
 )
 
 # Filter the dataset to include only the selected countries
-filtered_data = worldwide_wheat[worldwide_wheat['Area'].isin(selected_countries)]
+filtered_data = wheat_data[wheat_data['Area'].isin(selected_countries)]
 
 # Create the line chart
 fig = px.line(
