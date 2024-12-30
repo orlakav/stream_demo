@@ -64,6 +64,8 @@ selected_feature = st.selectbox("Select a feature to visualize:", features)
 
 # Filter dataset to include only Ireland by default
 default_countries = ['Ireland']
+
+# Get unique countries in the 'Area' column
 country_options = wheat_data['Area'].unique().tolist()
 
 # Allow users to toggle countries
