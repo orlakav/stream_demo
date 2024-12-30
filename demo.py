@@ -54,6 +54,51 @@ fig.update_layout(
 st.title("Worldwide Wheat Data Visualization")
 st.plotly_chart(fig)
 
+# new plot, line graph with toggles 
+
+# List of features to choose from
+features = ['Area harvested', 'Production', 'Yield']
+
+# Dropdown for feature selection
+selected_feature = st.selectbox("Select a feature to visualize:", features)
+
+# Filter dataset to include only Ireland by default
+default_countries = ['Ireland']
+country_options = worldwide_wheat['Area'].unique().tolist()
+
+# Allow users to toggle countries
+selected_countries = st.multiselect(
+    "Select countries to display:",
+    options=country_options,
+    default=default_countries  # Ireland is selected by default
+)
+
+# Filter the dataset to include only the selected countries
+filtered_data = worldwide_wheat[worldwide_wheat['Area'].isin(selected_countries)]
+
+# Create the line chart
+fig = px.line(
+    filtered_data,
+    x="Year",
+    y=selected_feature,
+    color="Area",  # Differentiate countries by color
+    title=f"{selected_feature} over Time by Area",
+    labels={"Year": "Year", selected_feature: selected_feature},
+    template="plotly_white",
+)
+
+# Update layout for interactivity and legend customization
+fig.update_layout(
+    legend_title="Area",
+    xaxis=dict(title="Year"),
+    yaxis=dict(title=selected_feature),
+    hovermode="x unified",  # Show values for all areas at the same year when hovering
+)
+
+# Display the chart in Streamlit
+st.title(f"Interactive Plot for {selected_feature}")
+st.plotly_chart(fig)
+
 # Load the dataset
 data_file = "area_farmed.csv"  
 area_farmed = pd.read_csv(data_file)
